@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <title>Random Sonlar</title>
+</head>
+<body style="background: gray">
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                Random
+            </a>
+        </div>
+    </nav>
+
+<div class="container">
+    <div class="row">
+        <div class="card mt-5">
+            <div class="card-body text-center">
+                <b>Birinchi bosqich: <br>Random: <span id="first_random_number"></span></b><br>
+                <button class="btn btn-outline-primary mt-2"
+                        onclick="generateRandomNumber('first_random_number', 1, 4000)">Random
+                </button>
+                <br>
+                <br>
+
+                <b>Ikkinchi bosqich: <br>Random: <span id="second_random_number"></span></b><br>
+                <button class="btn btn-outline-primary mt-2"
+                        onclick="generateRandomNumber('second_random_number', 1, 3000)">Random
+                </button>
+
+                <br>
+                <br>
+                <h2>Uchinchi bosqich</h2>
+                <input class="form-control mt-2" type="number" id="user_input1" value="1" min="1" max="100">
+                <input class="form-control mt-3" type="number" id="user_input2" value="100" min="1" max="100">
+
+                <br>
+                <div>
+                <h4>Result: <span id="third_number"></span></h4>
+                    <h3><span id="user_range"></h3>
+                    <h5><span id="date_time"></span></h5>
+                    </div>
+                <button class="btn btn-success" onclick="generateRandomNumbers()">Random</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="waves">
+      <div class="wave" id="wave1"></div>
+      <div class="wave" id="wave2"></div>
+      <div class="wave" id="wave3"></div>
+      <div class="wave" id="wave4"></div>
+    </div>
+
+    <p>&copy;2023 Asilbek && Abdulaziz | All Rights Reserved</p>
+  </footer>
+</body> <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>
+    function generateRandomNumber(spanId, min, max) {
+        var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+        document.getElementById(spanId).innerText = randomNumber;
+    }
+
+    function generateRandomNumbers() {
+        var userInput1 = parseInt(document.getElementById('user_input1').value);
+        var userInput2 = parseInt(document.getElementById('user_input2').value);
+        var userMin = parseInt(document.getElementById('user_input1').value);
+            var userMax = parseInt(document.getElementById('user_input2').value);
+
+            if (!isNaN(userMin) && !isNaN(userMax) && userMin <= userMax) {
+                document.getElementById('user_range').innerText = "Min: " + userMin + ", Max: " + userMax;
+            } else {
+                alert('Iltimos, to\'g\'ri son kiriting va Min son Max sondan kichik yoki teng bo\'lishi kerak!');
+            }
+        var now = new Date();
+        var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        document.getElementById('date_time').innerText = date_time_str;
+        if (userInput1 >= 1 && userInput1 <= 100 && userInput2 >= 1 && userInput2 <= 100) {
+            generateRandomNumber('third_number', userInput1, userInput2);
+        } else {
+            alert('Iltimos, ikkita sonni ham 1 dan 100 gacha kiriting!');
+        }
+    }
+</script>
+</html>
