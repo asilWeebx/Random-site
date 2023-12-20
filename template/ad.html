@@ -20,22 +20,47 @@
 <button onclick="boshlash()">Boshlash</button>
 
 <script>
-    function boshlash() {
-        var animatsiyaTajriba = 0;
-        animatsiya();
+    function generateRandomNumber(spanId, minId, maxId, minMaxId, dateId) {
+    var minInput = document.getElementById(minId);
+    var maxInput = document.getElementById(maxId);
+    var minMaxSpan = document.getElementById(minMaxId);
+    var dateSpan = document.getElementById(dateId);
 
-        function animatsiya() {
-            if (animatsiyaTajriba < 50) {
-                var tasodifiyRaqam = Math.floor(Math.random() * 100) + 1;
-                document.getElementById("raqam").innerText = tasodifiyRaqam;
-                animatsiyaTajriba++;
-                setTimeout(animatsiya, 50);
-            } else {
-                var xaqiqiyRaqam = "100";
-                document.getElementById("raqam").innerText = xaqiqiyRaqam;
-            }
+    var min = parseInt(minInput.value);
+    var max = parseInt(maxInput.value);
+
+    // Foydalanuvchi kiritgan sonlarni tekshirish
+    if (isNaN(min) || isNaN(max) || min > max || (spanId === 'first_random_number' && max > 4000) ||
+        (spanId === 'second_random_number' && max > 3000) || (spanId === 'third_random_number' && max > 2000)) {
+        alert("Iltimos, to'g'ri sonlarni kiriting. ", min, " son ", max, " sondan kichik bo'lishi va birinchi bosqich uchun Max sondan katta bo'lishi kerak!");
+        return;
+    }
+
+    // Update date and time
+    let now = new Date();
+    let dateTimeStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+    dateSpan.innerText = dateTimeStr;
+
+    var animatsiyaTajriba = 0;
+    animatsiya();
+
+    function animatsiya() {
+        if (animatsiyaTajriba < 50) {
+            var tasodifiyRaqam = Math.floor(Math.random() * (max - min + 1) + min);
+            document.getElementById(spanId).innerText = tasodifiyRaqam;
+            animatsiyaTajriba++;
+            setTimeout(animatsiya, 50);
+        } else {
+            var xaqiqiyRaqam = Math.floor(Math.random() * (max - min + 1) + min);
+            document.getElementById(spanId).innerText = xaqiqiyRaqam;
+
+            // Min va Max input maydonlarini tozalash
+            // Min va Max qiymatlarni ko'rsatish
+            minMaxSpan.innerText = "Min: " + min + " Max: " + max;
         }
     }
+}
+
 </script>
 
 </body>
