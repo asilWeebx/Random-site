@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raqam Animatsiya</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="raqam" style="font-size: 3em;"></h1>
+<button onclick="boshlash()">Boshlash</button>
+
+<script>
+    function boshlash() {
+        var animatsiyaTajriba = 0;
+        animatsiya();
+
+        function animatsiya() {
+            if (animatsiyaTajriba < 50) {
+                var tasodifiyRaqam = Math.floor(Math.random() * 100) + 1;
+                document.getElementById("raqam").innerText = tasodifiyRaqam;
+                animatsiyaTajriba++;
+                setTimeout(animatsiya, 50);
+            } else {
+                var xaqiqiyRaqam = "100";
+                document.getElementById("raqam").innerText = xaqiqiyRaqam;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

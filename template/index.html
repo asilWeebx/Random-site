@@ -38,14 +38,15 @@
                     <input class="form-control mt-3" type="number" id="second_max" value="3000">
                     <h4>Result: <span id="second_random_number"></span></h4>
                     <h3 id="second_min_max"></h3>
-                    <h5><span id="date_time"></span></h5>
+                    <h5><span id="date_time1"></span></h5>
                     <button class="btn btn-outline-primary" onclick="generateRandomNumber('second_random_number', 'second_min', 'second_max', 'second_min_max')">Random</button>
                 </div>
                 <div class="form-control mt-5">
                     <h2>Uchinchi bosqich</h2>
-                    <input class="form-control mt-2" type="number"  value="1">
-                    <input class="form-control mt-3" type="number" value="2000">
+                    <input class="form-control mt-2" id="min" type="number"  value="1">
+                    <input class="form-control mt-3" id="max" type="number" value="2000">
                     <h4 class="mt-5">Result: <span id="myHeading"></span></h4>
+                    <h3 id="uch"></h3>
                     <h5><span id="date_timed"></span></h5>
                     <button class="btn btn-success" onclick="showData()">Random</button>
                 </div>
@@ -101,54 +102,117 @@
                 } else return generateRandomNumeber(start, end);
             } else return generateRandomNumeber(start, end)
         }
+
+
+
+
+
     function generateRandomNumber(spanId, minId, maxId, minMaxId) {
-            var minInput = document.getElementById(minId);
-            var maxInput = document.getElementById(maxId);
-            var minMaxSpan = document.getElementById(minMaxId);
-            var now = new Date();
-            var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-            document.getElementById('date_time').innerText = date_time_str;
-            var min = parseInt(minInput.value);
-            var max = parseInt(maxInput.value);
+    var minInput = document.getElementById(minId);
+    var maxInput = document.getElementById(maxId);
+    var minMaxSpan = document.getElementById(minMaxId);
+    var now = new Date();
+    var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+    document.getElementById('date_time').innerText = date_time_str;
+    var now1 = new Date();
+    var date_time_str1 = now.toLocaleDateString() + ' ' + now1.toLocaleTimeString();
+    document.getElementById('date_time1').innerText = date_time_str1;
+    var min = parseInt(minInput.value);
+    var max = parseInt(maxInput.value);
 
-            // Foydalanuvchi kiritgan sonlarni tekshirish
-            if (isNaN(min) || isNaN(max) || min > max || (spanId === 'first_random_number' && max > 4000) ||
-                (spanId === 'second_random_number' && max > 3000) || (spanId === 'third_random_number' && max > 2000)) {
-                alert("Iltimos, to'g'ri sonlarni kiriting. ",min," son ",max," sondan kichik bo'lishi va birinchi bosqich uchun Max sondan katta bo'lishi kerak!");
-                return;
-            }
+    // Foydalanuvchi kiritgan sonlarni tekshirish
+    if (isNaN(min) || isNaN(max) || min > max || (spanId === 'first_random_number' && max > 4000) ||
+        (spanId === 'second_random_number' && max > 3000) || (spanId === 'third_random_number' && max > 2000)) {
+        alert("Iltimos, to'g'ri sonlarni kiriting. ", min, " son ", max, " sondan kichik bo'lishi va birinchi bosqich uchun Max sondan katta bo'lishi kerak!");
+        return;
+    }
 
-            var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
-            document.getElementById(spanId).innerText = randomNumber;
+    var animatsiyaTajriba = 0;
+    animatsiya();
+
+    function animatsiya() {
+        if (animatsiyaTajriba < 50) {
+            var tasodifiyRaqam = Math.floor(Math.random() * (max - min + 1) + min);
+            document.getElementById(spanId).innerText = tasodifiyRaqam;
+            animatsiyaTajriba++;
+            setTimeout(animatsiya, 50);
+        } else {
+            var xaqiqiyRaqam = Math.floor(Math.random() * (max - min + 1) + min);
+            document.getElementById(spanId).innerText = xaqiqiyRaqam;
 
             // Min va Max input maydonlarini tozalash
             // Min va Max qiymatlarni ko'rsatish
-            minMaxSpan.innerText = "Min: " + min + "Max: " + max;
+            minMaxSpan.innerText = "Min: " + min + " Max: " + max;
         }
+    }
+}
 
-                function showData() {
-            // Agar ma'lumot olinmagan bo'lsa
-            if (!document.getElementById("myHeading").innerText) {
-                var now = new Date();
-            var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-            document.getElementById('date_timed').innerText = date_time_str;
-                // Backend-dan olingan ma'lumot
 
- {% if my_data.count %}
-                var myData = "{{ code.number }}";
-{% else %}
-                var myData = "{{ i }}";
-                {% endif %}
-                document.getElementById("myHeading").innerText = myData;
+    function showData() {
+     var mineInput = document.getElementById("min");
+    var maxeInput = document.getElementById("max");
+    var minMaxSpand = document.getElementById("uch");
+    var min = parseInt(mineInput.value);
+    var max = parseInt(maxeInput.value);
+    minMaxSpand.innerText = "Min: " + min + " Max: " + max
+    // Agar ma'lumot olinmagan bo'lsa
+    if (!document.getElementById("myHeading").innerText) {
+        var now = new Date();
+        var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        document.getElementById('date_timed').innerText = date_time_str;
+
+        // Backend-dan olingan ma'lumot
+        {% if my_data.count %}
+            var myData = "{{ code.number }}";
+        {% else %}
+            var myData = "{{ i }}";
+        {% endif %}
+        document.getElementById("myHeading").innerText = myData;
+
+        // Boshlash tugmasini bosganda animatsiya boshlanadi
+        var animatsiyaTajriba = 0;
+        animatsiya();
+
+        function animatsiya() {
+            if (animatsiyaTajriba < 50) {
+                var tasodifiyRaqam = Math.floor(Math.random() * 2000) + 1;
+                document.getElementById("myHeading").innerText = tasodifiyRaqam;
+                animatsiyaTajriba++;
+                setTimeout(animatsiya, 50);
             } else {
-                var now = new Date();
-            var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-            document.getElementById('date_timed').innerText = date_time_str;
-                // 1 dan 1000 gacha random son generatsiya qilish
-                var randomNumber = Math.floor(Math.random() * 2000) + 1;
-                document.getElementById("myHeading").innerText = randomNumber;
+                var xaqiqiyRaqam = myData;
+                document.getElementById("myHeading").innerText = xaqiqiyRaqam;
+
             }
         }
+    } else {
+        var now = new Date();
+        var date_time_str = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        document.getElementById('date_timed').innerText = date_time_str;
+
+        // 1 dan 1000 gacha random son generatsiya qilish
+        var randomNumber = Math.floor(Math.random() * 2000) + 1;
+
+        // Boshlash tugmasini bosganda animatsiya boshlanadi
+        var animatsiyaTajriba = 0;
+        animatsiya();
+
+        function animatsiya() {
+            if (animatsiyaTajriba < 50) {
+                var tasodifiyRaqam = Math.floor(Math.random() * 2000) + 1;
+                document.getElementById("myHeading").innerText = tasodifiyRaqam;
+                animatsiyaTajriba++;
+                setTimeout(animatsiya, 50);
+            } else {
+                document.getElementById("myHeading").innerText = randomNumber;
+                var xaqiqiyRaqam = randomNumber;
+                document.getElementById("myHeading").innerText = xaqiqiyRaqam;
+            }
+        }
+
+    }
+}
+
 </script>
 </html>
 
