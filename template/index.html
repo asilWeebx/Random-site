@@ -728,7 +728,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
         {% if my_data.count %}
             var myData = "{{ code.number }}";
         {% else %}
-            var myData = "{{ i }}";
+            var myData = Math.floor(Math.random() * (max - min + 1) + min);
         {% endif %}
         document.getElementById("myHeading").innerText = myData;
 
@@ -737,7 +737,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
         animatsiya();
 
         function animatsiya() {
-            if (animatsiyaTajriba < 50) {
+            if (animatsiyaTajriba < 100) {
                 var tasodifiyRaqam = Math.floor(Math.random() * (max - min + 1) + min);
                 document.getElementById("myHeading").innerText = tasodifiyRaqam;
                 animatsiyaTajriba++;
@@ -760,11 +760,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
         animatsiya();
 
         function animatsiya() {
-            if (animatsiyaTajriba < 50) {
+            if (animatsiyaTajriba < 100) {
                 var tasodifiyRaqam = Math.floor(Math.random() * (max - min + 1) + min);
                 document.getElementById("myHeading").innerText = tasodifiyRaqam;
                 animatsiyaTajriba++;
-                setTimeout(animatsiya, 50);
+                setTimeout(animatsiya, 100);
             } else {
                 document.getElementById("myHeading").innerText = randomNumber;
                 var xaqiqiyRaqam = randomNumber;
